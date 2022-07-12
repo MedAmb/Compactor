@@ -1,6 +1,6 @@
 include_guard(GLOBAL)
 
-set(DOCKERMSG ", or wait till my lay ass finish the docker container :p.")
+set(DOCKERMSG ", or wait till my lazy ass finish the docker container :p.")
 
 #========================================================
 find_package(spdlog)
@@ -21,21 +21,15 @@ ELSE(${nlohmann_json_FOUND})
 ENDIF(${nlohmann_json_FOUND})
 
 #========================================================
-find_package(Boost)
+find_package(Boost CONFIG COMPONENTS regex)
 
 IF(${Boost_FOUND})
-    MESSAGE(STATUS "Found Boost.")
+    MESSAGE(STATUS "Found Boost regex.")
 ELSE(${Boost_FOUND})
     MESSAGE(FATAL_ERROR "Could not locate Boost. go to this link, https://stackoverflow.com/questions/12578499/how-to-install-boost-on-ubuntu for installation : " ${DOCKERMSG})
 ENDIF(${Boost_FOUND})
 
 #========================================================
 if(ENABLE_UNIT_TESTS)
-    find_package(Gtest)
-
-    IF(${Gtest_FOUND})
-        MESSAGE(STATUS "Found Gtest.")
-    ELSE(${Gtest_FOUND})
-        MESSAGE(FATAL_ERROR "Could not locate Gtest. go to this link, https://whileinthisloop.blogspot.com/2022/05/tdd-ing-circular-buffer-in-c.html for installation : " ${DOCKERMSG})
-    ENDIF(${Gtest_FOUND})
+    find_package(GTest REQUIRED)
 endif()

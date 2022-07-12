@@ -8,20 +8,27 @@ if(ENABLE_UNIT_TESTS)
     set(TEST_EXEC_NAME ${PROJECT_NAME}UT)
 
     set(SRC
-        ${PROJECT_SOURCE_DIR}/src/main.cpp
+        ${PROJECT_SOURCE_DIR}/src/convert.cpp
         main.cpp
     )
 
     set(LIBS
         nlohmann_json::nlohmann_json
-        ${Boost_LIBRARIES}
+        spdlog
+        Boost::regex
         GTest::GTest
+        GTest::Main
+        ${GMOCK_LIBRARIES}
     )
 
     add_executable(${TEST_EXEC_NAME} ${SRC})
     target_link_libraries(${TEST_EXEC_NAME} PRIVATE ${LIBS})
+    target_include_directories(${TEST_EXEC_NAME} PRIVATE ${PROJECT_SOURCE_DIR}/src)
 
+    add_test(
+        NAME ${TEST_EXEC_NAME}
+        COMMAND ${TEST_EXEC_NAME}
+    )
 
-    # add_gtest_test(${TEST_EXEC_NAME} "${SRC}" "${LIBS}")
-    #target_include_directories(${TEST_EXEC_NAME} PRIVATE ${PROJECT_SOURCE_DIR}/src)
+    set_tests_properties(${TEST_EXEC_NAME} PROPERTIES ENVIRONMENT UNIT_TEST=ON)
 endif()
