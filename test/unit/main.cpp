@@ -14,6 +14,5 @@ INSTANTIATE_TEST_CASE_P(
         TestSuite,
         Fixture,
         ::testing::Values(
-                std::string{"CompactorUT\n"},
-                std::string{"Compactor"}
+                std::string{"CompactorUT\n"}
         ));
